@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>VisionX Eduvations - Learning Hub</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      margin: 0;
+      display: flex;
+      background-color: #f4f4f4;
+    }
+
+    /* Sidebar Navigation */
+    nav {
+      width: 200px;
+      background-color: #333;
+      color: white;
+      height: 100vh;
+      padding-top: 20px;
+      position: fixed;
+      left: 0;
+      top: 0;
+    }
+
+    nav ul {
+      list-style: none;
+      padding: 0;
+    }
+
+    nav ul li {
+      margin: 15px 0;
+      text-align: center;
+    }
+
+    nav ul li a {
+      color: yellow;
+      text-decoration: none;
+      font-weight: bold;
+      display: block;
+      padding: 8px 0;
+    }
+
+    .logo {
+      position: absolute;
+      top: 20px;
+      right: 25px;
+      font-size: 18px;
+      font-weight: bold;
+      color: gold;
+    }
+
+    .main-content {
+      margin-left: 200px;
+      padding: 20px;
+      flex: 1;
+    }
+
+    header {
+      background-color: #0073e6;
+      color: white;
+      padding: 20px 20px;
+      text-align: center;
+	  font-size: 18px;
+      font-weight: bold;
+      color: yellow;
+    }
+
+    .container {
+      max-width: 1000px;
+      margin: 30px auto;
+    }
+
+    .category {
+      background-color: #fff;
+      border-radius: 8px;
+      margin-bottom: 20px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+    }
+
+    .category h2 {
+      margin: 0;
+      padding: 12px 20px;
+      background-color: #0073e6;
+      color: white;
+      cursor: pointer;
+      font-size: 1.1em;
+    }
+
+    .level-grid {
+      display: none;
+      padding: 15px 20px;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+      gap: 10px;
+    }
+
+    .level-grid a {
+      display: block;
+      background-color: #e6f2ff;
+      padding: 6px;
+      text-align: center;
+      border-radius: 4px;
+      text-decoration: none;
+      color: #0073e6;
+      font-weight: bold;
+      font-size: 0.9em;
+      transition: background-color 0.2s;
+    }
+
+    .level-grid a:hover {
+      background-color: #cce0ff;
+    }
+
+    footer {
+      background-color: #333;
+      color: white;
+      padding: 10px;
+      font-size: 12px;
+      text-align: center;
+      margin-top: 40px;
+    }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <ul>
+      <li><a href="#">Home</a></li>
+      <li><a href="#">About</a></li>
+      <li><a href="#">User Guide</a></li>
+      <li><a href="#">Contact</a></li>
+    </ul>
+  </nav>
+
+  <div class="main-content">
+    <div class="logo">VisionX Eduvations</div>
+
+    <header>
+      <h1>Welcome to VisionX</h1>
+      <h3>Structured learning for every Level — from School to Skills</h3>
+    </header>
+
+    <div class="container">
+
+      <div class="category">
+        <h2 onclick="toggleGrid(this)">📘 School Curriculum</h2>
+        <div class="level-grid">
+          <a href="Level6.html">Class 6</a>
+          <a href="Level7.html">Class 7</a>
+          <a href="public\level8.html">Class 8</a>
+          <a href="public\level9.html">Class 9</a>
+          <a href="public\level10.html">Class 10</a>
+          <a href="public\level11.html">Class 11</a>
+          <a href="public\level12.html">Class 12</a>
+        </div>
+      </div>
+
+      <div class="category">
+        <h2 onclick="toggleGrid(this)">🎓 Higher Education</h2>
+        <div class="level-grid">
+          <a href="#">B.Sc Physics</a>
+          <a href="#">B.Com Accounting</a>
+          <a href="#">B.Tech CSE</a>
+          <a href="#">M.Sc Chemistry</a>
+          <a href="#">MBA Strategy</a>
+        </div>
+      </div>
+
+      <div class="category">
+        <h2 onclick="toggleGrid(this)">🧪 Competitive Exams</h2>
+        <div class="level-grid">
+          <a href="#">JEE</a>
+          <a href="#">NEET</a>
+          <a href="#">UPSC</a>
+          <a href="#">SSC</a>
+          <a href="#">Banking</a>
+        </div>
+      </div>
+
+      <div class="category">
+        <h2 onclick="toggleGrid(this)">🛠️ Skill-Based Learning</h2>
+        <div class="level-grid">
+          <a href="#">Web Dev</a>
+          <a href="#">Prompt Engg</a>
+          <a href="#">QA Testing</a>
+          <a href="#">Data Analysis</a>
+          <a href="#">Design Thinking</a>
+        </div>
+      </div>
+
+    </div>
+
+    <footer>
+      Created by Pedamallu Gupta | <a href="mailto:pedamallugupta@gmail.com" style="color: yellow;">pedamallugupta@gmail.com</a>
+    </footer>
+  </div>
+
+  <script>
+    function toggleGrid(header) {
+      const grid = header.nextElementSibling;
+      grid.style.display = grid.style.display === "grid" ? "none" : "grid";
+    }
+  </script>
+
+</body>
+</html>
