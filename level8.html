@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Prompt Generation System</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 0; padding: 0; background-color: #f4f4f4; text-align: center; }
+        nav { background-color: #333; color: #fff; padding: 10px; }
+        nav ul { list-style: none; padding: 0; margin: 0; display: flex; }
+        nav ul li { margin-left: 20px; }
+        nav ul li a { color: yellow; text-decoration: none; font-weight: bold; }
+        header { background-color: #0073e6; color: white; padding: 20px; }
+        main { margin: 20px auto; padding: 20px; background: white; border-radius: 5px; box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); max-width: 500px; }
+        form { display: flex; flex-direction: column; }
+        form label { margin-top: 10px; }
+        form select { padding: 10px; width: 100%; margin-bottom: 10px; }
+        button { margin-top: 15px; background-color: #0073e6; color: white; border: none; padding: 10px; cursor: pointer; }
+		.logo {
+			font-size: 18px;
+			font-weight: bold;
+			color: gold;
+			font-family: 'Arial', sans-serif;
+			text-align: right; /* Aligns text to the right */
+			margin-right: 20px; /* Adds space on the right */
+			}
+	.response-fieldset {
+    border: 2px solid #0073e6; /* Adds a blue border */
+    padding: 15px;
+    border-radius: 5px; /* Softens corners */
+    background-color: #f8f9fa; /* Light gray background */
+}
+
+.response-options {
+    display: flex;
+    flex-wrap: wrap; /* Ensures good mobile compatibility */
+    gap: 12px;
+	margin-top:10px;
+    justify-content: space-between;
+}
+
+
+
+.response-options label:hover {
+    background-color: #add8e6; /* Light blue on hover */
+}
+		
+    </style>
+</head>
+<body>
+
+    <nav>
+        <div class="logo">VisionX Eduvations</div>
+        <ul>
+            <li><a href="#">Home</a></li>
+            <li><a href="#">About</a></li>
+            <li><a href="#">User Guide</a></li>
+            <li><a href="#">Contact</a></li>
+        </ul>
+    </nav>
+
+    <header>
+        <h1 style="color: yellow;">Your AI Friend</h1>
+       
+    </header>
+
+    <main>
+	
+	
+        <form id="queryForm">
+            <label for="level" class="form-label">Select Level:</label>
+            <select id="level" name="level" class="form-input" onchange="updateSubjects()">
+                <option value="" disabled selected>Select a level</option>
+                <option value="8">Class 8</option>
+               
+            </select>
+
+            <label for="subject" class="form-label">Subject:</label>
+            <select id="subject" name="subject" class="form-input" onchange="updateChapters()">
+                <option value="" disabled selected>Select a Subject</option>
+            </select>
+
+            <label for="chapter" class="form-label">Chapter:</label>
+            <select id="chapter" name="chapter" class="form-input" onchange="updateQueryCategories()">
+                <option value="" disabled selected>Select a Chapter</option>
+            </select>
+
+            <label for="queryCategory">Prompt Type:</label>
+            <select id="queryCategory" name="queryCategory" class="form-input" onchange="updateQueries()">
+			<option value="" disabled selected>Select Prompt Type</option>
+			</select>
+			
+			</select>
+
+            <label for="query">Query:</label>
+            <select id="query" name="query" class="form-input">
+                <option value="" disabled selected>Select a Query</option>
+            </select>
+            
+			<fieldset class="response-fieldset">
+    <legend>Select Response Type:</legend>
+    <div class="response-options">
+        <label><input type="radio" name="responseType" value=".Explain Very Briefly"> Very Brief</label>
+        <label><input type="radio" name="responseType" value=".Explain Briefly"> In Brief</label>
+        <label><input type="radio" name="responseType" value=".Explain in about 50 words"> 50 words</label>
+        <label><input type="radio" name="responseType" value=".Explain in about 100 words"> 100 words</label>
+        <label><input type="radio" name="responseType" value=".Explain in about 500 words"> 500 words</label>
+        <label><input type="radio" name="responseType" value="MCQ"> .Give 10 MCQ with answers</label>
+    </div>
+		</fieldset>
+	
+           
+	<button type="button" onclick="openLeChatPage()">Submit to LeChat AI</button>
+	<button type="button" onclick="openCopilotPage()">Submit to Copilot ai</button>
+	
+
+	<section id="assessment-studio" style="margin-top: 30px; padding: 20px; border: 2px dashed #999; border-radius: 10px; background-color: #f9f9f9;">
+	<h2 style="font-family: 'Segoe UI', sans-serif; color: #444;">📘 Assessment Studio <span style="color: #888;">(Coming Soon)</span></h2>
+	<p style="color: #666;"> Stay tuned!</p>
+	</section>
+
+<script>
+
+async function copyQueryToClipboard() {
+  try {
+    // Get selected values
+    const levelSelected = document.getElementById("level").value;
+    const subjectSelected = document.getElementById("subject").value;
+    const chapterSelected = document.getElementById("chapter").value;
+    const querySelected = document.getElementById("query").value;
+    const responseTypeSelected = document.querySelector('input[name="responseType"]:checked')?.value || "";
+
+    // Format the instruction-style string
+    const queryString = `From NCERT text of Class ${levelSelected} ${subjectSelected} subject, chapter: ${chapterSelected}, Prompt: ${querySelected} ${responseTypeSelected}`.trim();
+
+    // Clear and then copy to clipboard
+    await navigator.clipboard.writeText("");
+    await navigator.clipboard.writeText(queryString);
+
+    alert("✅ Query copied:\n\n" + queryString + "\n\nPaste this into your AI model shortcut: Ctrl+v");
+    return queryString;
+  } catch (err) {
+    console.error("❌ Clipboard copy failed:", err);
+    alert("Failed to copy query. Please try again.");
+  }
+}
+
+async function openLeChatPage() {
+    await copyQueryToClipboard();
+    window.open("https://lechat.ai", "_blank"); // Opens LeChat in new tab
+}
+
+async function openCopilotPage() {
+    await copyQueryToClipboard();
+    window.open("https://copilot.microsoft.com/chats", "_blank"); // Opens Copilot in new tab
+}
+
+
+</script>
+            
+        </form>
+    </main>
+
+    <script>
+	
+   const chaptersData = {
+  "8": {
+    "Maths": [
+      "Rational Numbers",
+      "Linear Equations in One Variable",
+      "Understanding Quadrilaterals",
+      "Practical Geometry",
+      "Data Handling",
+      "Squares and Square Roots",
+      "Cubes and Cube Roots",
+      "Comparing Quantities",
+      "Algebraic Expressions and Identities",
+      "Visualising Solid Shapes",
+      "Mensuration",
+      "Exponents and Powers",
+      "Direct and Inverse Proportions",
+      "Factorisation",
+      "Introduction to Graphs",
+      "Playing with Numbers"
+    ],
+    "Science": [
+      "Crop Production and Management",    
+	  "Microorganisms: Friend and Foe",
+	  "Synthetic Fibres and Plastics",
+	  "Materials-Metals and Non-Metals",
+	  "Coal and Petroleum",
+	  "Combustion and Flame",
+	  "Conservation of Plants and Animals",
+	  "Cell – Structure and Functions",
+	  "Reproduction in Animals",
+	  "Reaching the Age of Adolescence",
+	  "Force and Pressure",
+	  "Friction",
+	  "Sound",
+	  "Chemical Effects of Electric Current",
+	  "Some Natural Phenomena",
+	  "Light",
+	  "Stars and The Solar System",
+	  "Pollution of Air and Water"
+			  ],
+	"Social": [
+      "How, When and Where",
+	  "From Trade to Territory",
+	  "Ruling the Countryside",  
+	  "Tribals, Dikus and the Vision of a Golden Age",  
+	  "When People Rebel",
+	  "Colonialism and the City",
+	  "Weavers, Iron Smelters and Factory Owners",
+	  "Civilising the “Native”, Educating the Nation",
+	  "Women, Caste and Reform",
+	  "The Changing World of Visual Arts",
+	  "The Making of the National Movement: 1870s – 1947",
+	  "India after Independence",
+	  "Resources",
+	  "Land, Soil, Water, Natural Vegetation and Wildlife Resources",
+	  "Mineral and Power Resources",
+	  "Agriculture",
+	  "Industries",
+	  "The Indian Constitution",
+	  "Understanding Secularism",
+	  "Why Do We Need a Parliament?",
+	  "Understanding Laws",
+	  "Judiciary",
+	  "Understanding Our Criminal Justice System",
+	  "Understanding Marginalisation",
+	  "Confronting Marginalisation",
+	  "Public Facilities",
+	  "Law and Social Justice"
+			  ]
+	  }
+};
+
+function updateSubjects() {
+  const levelSelected = document.getElementById("level").value;
+  const subjectDropdown = document.getElementById("subject");
+  subjectDropdown.innerHTML = `<option value="" disabled selected>Select a Subject</option>`;
+
+  // Reset dependent dropdowns
+  document.getElementById("chapter").innerHTML = `<option value="" disabled selected>Select a Chapter</option>`;
+  document.getElementById("queryCategory").innerHTML = `<option value="" disabled selected>Select a Query Category</option>`;
+  document.getElementById("query").innerHTML = `<option value="" disabled selected>Select a Query</option>`;
+
+  if (chaptersData[levelSelected]) {
+    const subjects = Object.keys(chaptersData[levelSelected]);
+    subjects.forEach(subject => {
+      const option = document.createElement("option");
+      option.value = subject;
+      option.textContent = subject;
+      subjectDropdown.appendChild(option);
+    });
+  }
+}
+       
+function updateChapters() {
+  const levelSelected = document.getElementById("level").value;
+  const subjectSelected = document.getElementById("subject").value;
+  const chapterDropdown = document.getElementById("chapter");
+
+  chapterDropdown.innerHTML = `<option value="" disabled selected>Select a Chapter</option>`;
+  document.getElementById("queryCategory").innerHTML = `<option value="" disabled selected>Select a Query Category</option>`;
+  document.getElementById("query").innerHTML = `<option value="" disabled selected>Select a Query</option>`;
+
+  if (levelSelected && subjectSelected) {
+    const chapters = chaptersData[levelSelected][subjectSelected] || [];
+    chapters.forEach(chapter => {
+      const option = document.createElement("option");
+      option.value = chapter;
+      option.textContent = chapter;
+      chapterDropdown.appendChild(option);
+    });
+  }
+updateQueryCategories();
+}
+
+function updateQueryCategories() {
+  const queryCategoryDropdown = document.getElementById("queryCategory");
+  queryCategoryDropdown.innerHTML = `<option value="" disabled selected>Select a Promt Type</option>`;
+  
+  const staticCategories = ["Knowledge", "Understanding", "Application", "Creative", "Assessment"];
+  staticCategories.forEach(type => {
+    const option = document.createElement("option");
+    option.value = type;
+    option.textContent = type;
+    queryCategoryDropdown.appendChild(option);
+		});
+
+	}
+
+async function updateQueries() {
+  const selectedlevel = document.getElementById("level").value;
+  const selectedSubject = document.getElementById("subject").value;
+  const selectedChapter = document.getElementById("chapter").value;
+  const selectedCategory = document.getElementById("queryCategory").value;
+  const queryDropdown = document.getElementById("query");
+
+  // Clear existing options
+  queryDropdown.innerHTML = `<option value="" disabled selected>Loading queries...</option>`;
+
+  try {
+   const response = await fetch(`http://localhost:3000/api/queries?level=${selectedlevel}&subject=${encodeURIComponent(selectedSubject)}&chapter=${encodeURIComponent(selectedChapter)}&queryCategory=${encodeURIComponent(selectedCategory)}`);
+   
+    const data = await response.json(); // ✅ Move this above the console.log
+    console.log("Fetched data:", data); // ✅ Now 'data' is defined here
+
+    queryDropdown.innerHTML = `<option value="" disabled selected>Select a Query</option>`;
+
+    if (!data.queries || data.queries.length === 0) {
+      queryDropdown.innerHTML = `<option value="" disabled selected>No queries found</option>`;
+      return;
+    }
+
+    data.queries.forEach(query => {
+      const option = document.createElement("option");
+      option.value = query;
+      option.textContent = query;
+      queryDropdown.appendChild(option);
+    });
+  } catch (err) {
+    console.error("Error fetching queries:", err);
+    queryDropdown.innerHTML = `<option value="" disabled selected>Failed to load queries</option>`;
+  }
+}
+	
+</script>
+
+	<footer style="font-family: 'Times New Roman', serif; font-size: 12px;">
+    Creator: Pedamallu Gupta | Contact: <a href="mailto:pedamallugupta@gmail.com">pedamallugupta@gmail.com</a>
+	</footer>
+	
+	
+
+</body>
+</html>
